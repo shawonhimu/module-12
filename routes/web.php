@@ -49,8 +49,8 @@ Route::post('/user', [ UserController::class, 'store' ]);
 //========      Trip Route      =========//
 
 Route::get('/', [ TripController::class, 'index' ])->middleware('CheckLogin');
-Route::post('/book-ticket', [ TripController::class, 'store' ]);
-Route::get('/available-ticket/{id}', [ TripController::class, 'availabeScheduleSeat' ]);
+Route::post('/book-ticket', [ TripController::class, 'store' ])->middleware('CheckLogin');
+Route::get('/available-ticket/{id}', [ TripController::class, 'availabeScheduleSeat' ])->middleware('CheckLogin');
 
 //========      User Login      =========//
 
