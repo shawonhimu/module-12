@@ -12,7 +12,7 @@ class BusController extends Controller
     public function index()
     {
         $busData = Bus::all();
-        return $busData;
+        return view('DashboardBus', [ 'buses' => $busData ]);
     }
 
     //=========  Show the form for creating a new resource  =========//

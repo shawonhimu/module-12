@@ -7,8 +7,9 @@
 
     {{-- User ticket --}}
     <div class="container">
-        <div class="py-5 text-center">
+        <div class="m-2 text-center">
             <h4>Buy your ticket</h4>
+            <hr>
         </div>
         <form action="{{ url('book-ticket') }}" method="post">
             @csrf
@@ -17,6 +18,7 @@
                 <div class="col-lg-2"></div>
 
                 <div class="col-lg-4">
+
                     <div class="bgTiki">
                         <div class="d-flex justify-content-between mb-4">
                             <div class="mt-4 pt-3"><span class="p-2 bg-light">Door</span></div>
@@ -344,10 +346,27 @@
                 <div class="col-lg-4">
                     <div>
                         <div>
+                            <div>
+                                <div class="bgTiki d-flex justify-content-between">
+                                    <div>
+                                        <div class="tiki-mark bg-light"></div>
+                                        <div><span>Available</span></div>
+                                    </div>
+                                    <div>
+                                        <div class="tiki-mark bg-danger"></div>
+                                        <div><span>Booked</span></div>
+                                    </div>
+                                    <div>
+                                        <div class="tiki-mark bg-success"></div>
+                                        <div><span>Selected</span></div>
+                                    </div>
+                                </div>
+                                <div class="my-2 bgTiki"> To see preview select below options</div>
+                            </div>
 
                             {{-- For getting Schedule/Destination data all changes here :: It happen By Javascript query --}}
 
-                            <div class="mb-3">
+                            <div class="my-3">
                                 <label for="rootDirection" class="form-label">Select bus root direction </label>
                                 <select class="form-select" name="rootDirection" id="rootDirection"
                                     onchange="calculateTotal()" required>
@@ -464,7 +483,15 @@
 
                 if (response.status == 200) {
                     let data1 = response.data.allSeats;
-                    // console.log(data1);
+                    let data = response.data.noseat;
+                    console.log(data);
+                    if (data) {
+                        swal("NO SEAT AVAILABLE !", data, "error", {
+                            button: false,
+                            button: "OK",
+                            // timer: 3000,
+                        })
+                    }
 
                     // console.log(id);
 
@@ -515,8 +542,8 @@
         <script>
             swal("Error !", "{{ session('error') }}", "error", {
                 button: false,
-                // button: "OK",
-                timer: 3000,
+                button: "OK",
+                // timer: 3000,
             })
         </script>
     @else

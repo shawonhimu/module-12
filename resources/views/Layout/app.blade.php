@@ -11,11 +11,14 @@
     <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="./css/dataTables.bootstrap5.min.css" />
+
     <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
 
     @yield('styles')
     {{-- Custom Styles if needed --}}
 
+    <link rel="stylesheet" href="{{ asset('user.css') }}" />
     <link rel="stylesheet" href="{{ asset('style.css') }}" />
 </head>
 
@@ -28,13 +31,17 @@
 
     {{-- </div> --}}
 
+
+    <script src="{{ asset('js/axios.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
     @yield('scripts')
     {{-- Custom JS if needed --}}
 
+
     <script src="{{ asset('js/custom.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.7.0.js') }}"></script>
-    <script src="{{ asset('js/axios.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
 </body>
 
 </html>

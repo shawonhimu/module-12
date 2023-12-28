@@ -27,8 +27,21 @@ class TripController extends Controller
 
     public function availabeScheduleSeat($id)
     {
-        $allSeats = Trip::where('schedule_id', '=', $id)->select('seat_name')->get();
-        return [ 'allSeats' => $allSeats ];
+        $allBookedSeats = Trip::where('schedule_id', '=', $id)->select('seat_name')->get();
+
+        $countBookedSeats = Trip::where('schedule_id', '=', $id)->select('seat_name')->count();
+        $schedule = Schedule::with('bus')->find($id);
+        $busCapacity = $schedule->bus->capacity;
+        // $busCapacity = 38;
+        if ($busCapacity == $countBookedSeats) {
+            return response()->json([
+                'allSeats' => $allBookedSeats,
+                'noseat' => 'No seat available, Please try another schedule',
+             ]);
+        } else {
+
+            return [ 'allSeats' => $allBookedSeats ];
+        }
     }
 
     //=========  Show the form for creating a new resource  =========//
@@ -52,20 +65,36 @@ class TripController extends Controller
         $scheduleId = $request->input('scheduleId');
         //As unique phone no
         $isSold = Trip::where('seat_name', $seatName)->where('schedule_id', $scheduleId)->where('sell_status', '=', 1)->value('id');
-        if (!$isSold) {
-            Trip::create(
-                [
-                    'seat_name' => $seatName,
-                    'sell_status' => $sellStatus,
-                    'user_id' => $userId,
-                    'location_id' => $locationId,
-                    'schedule_id' => $scheduleId,
-                 ]
-            );
-            return redirect('/')->with('success', 'You have successfully buy ticket');
+
+        $countBookedSeats = Trip::where('schedule_id', '=', $scheduleId)->select('seat_name')->count();
+        $schedule = Schedule::with('bus')->find($scheduleId);
+        $busCapacity = $schedule->bus->capacity;
+        // $busCapacity = 36;
+
+        if ($countBookedSeats <= $busCapacity & $seatName != null) {
+
+            if (!$isSold) {
+                Trip::create(
+                    [
+                        'seat_name' => $seatName,
+                        'sell_status' => $sellStatus,
+                        'user_id' => $userId,
+                        'location_id' => $locationId,
+                        'schedule_id' => $scheduleId,
+                     ]
+                );
+                return redirect('/')->with('success', 'You have successfully buy ticket');
+            } else {
+                return redirect('/')->with('error', 'Something wrong, try again');
+            }
+            // return [ 'allSeats' => $allBookedSeats ];
+
         } else {
-            return redirect('/')->with('error', 'Something wrong, try again');
+            return redirect('/')->with(
+                'error', 'Something wrong, Please try again',
+            );
         }
+
     }
 
     //=========  Display the specified resource   ===========//

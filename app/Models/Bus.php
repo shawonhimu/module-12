@@ -11,4 +11,8 @@ class Bus extends Model
     protected $fillable = [
         'bus_number', 'name', 'capacity',
      ];
+    public function schedule()
+    {
+        return $this->hasOne(Schedule::class);
+    }
 }

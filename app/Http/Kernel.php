@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         //login check middleware register
 
         'CheckLogin' => \App\Http\Middleware\LoginCheckMiddleware::class,
+        'AdminLogin' => \App\Http\Middleware\AdminLoginCheck::class,
      ];
 }

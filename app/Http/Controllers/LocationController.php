@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class LocationController extends Controller
@@ -10,7 +11,8 @@ class LocationController extends Controller
 
     public function index()
     {
-        //
+        $locationData = Location::get();
+        return view('DashboardLocation', [ 'locations' => $locationData ]);
     }
 
     //=========  Show the form for creating a new resource  =========//

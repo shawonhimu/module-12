@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'name', 'phone', 'address' ];
+    protected $fillable = [ 'name', 'phone', 'address', 'password' ];
     public function trip()
     {
         return $this->hasMany(Trip::class); // means many seat actually

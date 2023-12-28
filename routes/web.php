@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminHomeController;
+use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\LocationController;
@@ -11,40 +13,59 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
 
-//========      Bus Route      =========//
+//========      Admin Route      =========//
 
-Route::get('/bus', [ BusController::class, 'index' ]);
-Route::post('/bus', [ BusController::class, 'store' ]);
+Route::get('/admin', [ AdminLoginController::class, 'Login' ]);
+Route::post('/admin', [ AdminLoginController::class, 'onLogin' ]);
 
-//========      Driver Route      =========//
+//=========== Admin All Route ============//
 
-Route::get('/driver', [ DriverController::class, 'index' ]);
-Route::post('/driver', [ DriverController::class, 'store' ]);
+Route::middleware([ 'AdminLogin' ])->group(function () {
 
-//========      Supervisor Route      =========//
+    //========      Admin Route      =========//
 
-Route::get('/supervisor', [ SupervisorController::class, 'index' ]);
-Route::post('/supervisor', [ SupervisorController::class, 'store' ]);
+    Route::get('/admin-logout', [ AdminLoginController::class, 'onLogout' ]);
+    Route::get('/home', [ AdminHomeController::class, 'index' ]);
 
-//========      Location Route      =========//
+    //========      Bus Route      =========//
 
-Route::get('/location', [ LocationController::class, 'index' ]);
-Route::post('/location', [ LocationController::class, 'store' ]);
+    Route::get('/bus', [ BusController::class, 'index' ])->middleware('AdminLogin');
+    Route::post('/bus', [ BusController::class, 'store' ])->middleware('AdminLogin');
 
-//========      Transaction Route      =========//
+    //========      Driver Route      =========//
 
-Route::get('/transaction', [ TransactionController::class, 'index' ]);
-Route::post('/transaction', [ TransactionController::class, 'store' ]);
+    Route::get('/driver', [ DriverController::class, 'index' ]);
+    Route::get('/new-driver', [ DriverController::class, 'create' ]);
+    Route::post('/driver', [ DriverController::class, 'store' ]);
 
-//========      Schedule Route      =========//
+    //========      Supervisor Route      =========//
 
-Route::get('/schedule', [ ScheduleController::class, 'index' ]);
-Route::post('/schedule', [ ScheduleController::class, 'store' ]);
+    Route::get('/supervisor', [ SupervisorController::class, 'index' ]);
+    Route::get('/new-supervisor', [ SupervisorController::class, 'create' ]);
+    Route::post('/supervisor', [ SupervisorController::class, 'store' ]);
 
-//========      User Route      =========//
+    //========      Location Route      =========//
 
-Route::get('/user', [ UserController::class, 'index' ]);
-Route::post('/user', [ UserController::class, 'store' ]);
+    Route::get('/location', [ LocationController::class, 'index' ]);
+    Route::post('/location', [ LocationController::class, 'store' ]);
+
+    //========      Transaction Route      =========//
+
+    Route::get('/transaction', [ TransactionController::class, 'index' ]);
+    Route::post('/transaction', [ TransactionController::class, 'store' ]);
+
+    //========      Schedule Route      =========//
+
+    Route::get('/schedule', [ ScheduleController::class, 'index' ]);
+    Route::get('/new-schedule', [ ScheduleController::class, 'create' ]);
+    Route::post('/schedule', [ ScheduleController::class, 'store' ]);
+
+    //========      User Route      =========//
+
+    Route::get('/user', [ UserController::class, 'index' ]);
+    Route::post('/user', [ UserController::class, 'store' ]);
+
+});
 
 //========      Trip Route      =========//
 

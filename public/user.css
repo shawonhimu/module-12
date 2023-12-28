@@ -1,0 +1,30 @@
+.bgTiki {
+    background: #ddd;
+    padding: 10px;
+    max-width: 320px;
+    text-align: center;
+}
+
+.tiki-seat {
+    position: relative;
+    width: 54px;
+    background: #fff;
+}
+
+.tikiBooked {
+    background: #870505;
+}
+
+.tikiAvail {
+    background: #fff !important;
+}
+
+input[type="radio"]:checked ~ span {
+    background: green !important;
+    color: #ddd !important;
+}
+.tiki-mark {
+    width: 45px;
+    height: 34px;
+    border-radius: 3px;
+}

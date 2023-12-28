@@ -10,11 +10,11 @@ class UserLoginController extends Controller
     // ====== show login form =========== //
     public function Login(Request $request)
     {
-        if (($request->session()->has('phone')) && ($request->session()->has('password'))) {
-            return redirect('/');
-        } else {
-            return view('UserLogin');
-        }
+        // if (($request->session()->has('phone')) && ($request->session()->has('password'))) {
+        //     return redirect('/');
+        // } else {
+        return view('UserLogin');
+        // }
 
     }
 
@@ -59,31 +59,30 @@ class UserLoginController extends Controller
 
     public function registration(Request $request)
     {
-        $keeperName = $request->input('keeperName');
-        $username = $request->input('username');
-        $designation = $request->input('designation');
-
-        // if ($conFirmPassword != $password) {
-        //     return redirect('registration')->with('error', "Password doesn't match. Try again !");
-        // } else {
-        //     if ((!$isUsername & !$isKeeperPhone)) {
-        //         $result = DB::table('shopkeepers')->insert([
-        //             'keeper_name' => $keeperName,
-        //             'username' => $username,
-        //             'designation' => $designation,
-        //             'keeper_phone' => $keeperPhone,
-        //             'email' => $email,
-        //             'address' => $address,
-        //             'password' => $password,
-        //          ]);
-        //         if ($result) {
-        //             return redirect('login')->with('success', 'Registration successful ! Please Login.');
-        //         } else {
-        //             return redirect('registration')->with('error', 'Failed to register !');
-        //         }
-        //     } else {
-        //         return redirect('registration')->with('error', 'Username or phone number has already used ! Please try again or go to login page ');
-        //     }
-        // }
+        $name = $request->input('name');
+        $phone = $request->input('phone');
+        $address = $request->input('address');
+        $password = $request->input('password');
+        $conFirmPassword = $request->input('conFirmPassword');
+        $isPhone = User::where('phone', '=', $phone)->first();
+        if ($conFirmPassword != $password) {
+            return redirect('registration')->with('error', "Wrong password to match . Try again !");
+        } else {
+            if (!$isPhone) {
+                $result = User::create([
+                    'name' => $name,
+                    'phone' => $phone,
+                    'address' => $address,
+                    'password' => $password,
+                 ]);
+                if ($result) {
+                    return redirect('login')->with('success', 'Registration successful ! Please Login.');
+                } else {
+                    return redirect('registration')->with('error', 'Failed to register !');
+                }
+            } else {
+                return redirect('registration')->with('error', 'Phone number has already used ! Please login  ');
+            }
+        }
     }
 }

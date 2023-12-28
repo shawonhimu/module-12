@@ -12,14 +12,14 @@ class DriverController extends Controller
     public function index()
     {
         $driverData = Driver::all();
-        return $driverData;
+        return view('DashboardDriver', [ 'drivers' => $driverData ]);
     }
 
     //=========  Show the form for creating a new resource  =========//
 
     public function create()
     {
-        //
+        return view('AddDriver');
     }
 
     //=========   Store a newly created resource in storage  ===========//
@@ -38,9 +38,9 @@ class DriverController extends Controller
             $driver->phone = $phone;
             $driver->address = $address;
             $driver->save();
-            return "Driver added successfully";
+            return redirect('/new-driver')->with('success', "Driver added successfully");
         } else {
-            return "Driver already exists";
+            return redirect('/new-driver')->with('error', "Driver already exists");
         }
 
     }
