@@ -9,4 +9,10 @@
 
 ## About Laravel
 
-Assignment Main Requirement will be found in <strong> TripController </strong>
+<h2 align="center">
+    Tiki :: Bus Ticket Management System
+</h2>
+
+<h4> Author : Md. Shawanuzzaman Himu </h4>
+
+==== Shawon Himu  ========
